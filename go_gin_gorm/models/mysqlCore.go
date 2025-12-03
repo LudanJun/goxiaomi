@@ -21,7 +21,7 @@ func init() {
 	}
 	ip := config.Section("mysql").Key("ip").String()
 	port := config.Section("mysql").Key("port").String()
-	user := config.Section("mysql").Key("user").String()
+	user := config.Section("mysql").Key("user").String() // 获取配置文件中mysql的配置
 	password := config.Section("mysql").Key("password").String()
 	database := config.Section("mysql").Key("database").String()
 

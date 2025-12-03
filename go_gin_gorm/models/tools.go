@@ -48,13 +48,13 @@ func Md5(str  string) string {
 }
 
 //表示把string转int
-func StringToInt(str  string) (int,error) {
+func Int(str  string) (int,error) {
  	n,err:=	strconv.Atoi(str) // 将字符串转换为int
 	return n ,err
 }
 
 //表示把int转string
-func IntToString(n int) string {
+func String(n int) string {
 	str :=strconv.Itoa(n)  //   将int转换为字符串
    return str
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type MainController struct{}
+type MainController struct{} // 定义一个结构体
 //登录成功进入到主页 这个是主页
 func (con MainController) Index(c *gin.Context) {
 	// //获取 userinfo 对应的session
