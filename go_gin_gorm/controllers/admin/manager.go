@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"006_gorm/models"
+	"go_gin_gorm/models"
 	"fmt"
 	"net/http"
 	"strings"

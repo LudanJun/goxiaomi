@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"006_gorm/controllers/api"
+	"go_gin_gorm/controllers/api"
 
 	"github.com/gin-gonic/gin"
 )

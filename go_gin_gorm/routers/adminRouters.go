@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"006_gorm/controllers/admin"
-	"006_gorm/middlewares"
+	"go_gin_gorm/controllers/admin"
+	"go_gin_gorm/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,5 +42,11 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouters.POST("/role/doEdit", admin.RoleController{}.DoEdit)
 		adminRouters.GET("/role/delete", admin.RoleController{}.Delete)
 
+		adminRouters.GET("/access", admin.AccessController{}.Index)
+		adminRouters.GET("/access/add", admin.AccessController{}.Add)
+		adminRouters.POST("/access/doAdd", admin.AccessController{}.DoAdd)
+		adminRouters.GET("/access/edit", admin.AccessController{}.Edit)
+		adminRouters.POST("/access/doEdit", admin.AccessController{}.DoEdit)
+		adminRouters.GET("/access/delete", admin.AccessController{}.Delete)
 	}
 }

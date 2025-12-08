@@ -1,4 +1,4 @@
-module 006_gorm
+module go_gin_gorm
 
 go 1.23.4
 

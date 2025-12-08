@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"006_gorm/models"
+	"go_gin_gorm/models"
 	"encoding/json"
 	"fmt"
 	"strings"

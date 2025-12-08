@@ -1,11 +1,11 @@
 package main
 
 import (
-	"006_gorm/models"
-	"006_gorm/routers"
 
 	// "fmt"
 	// "os"
+	"go_gin_gorm/models"
+	"go_gin_gorm/routers"
 	"text/template"
 
 	"github.com/gin-contrib/sessions"
@@ -13,6 +13,12 @@ import (
 	"github.com/gin-gonic/gin"
 	// "gopkg.in/ini.v1"
 )
+/*
+http://127.0.0.1:8000/admin/
+账号：admin
+密码：123456
+go run github.com/pilu/fresh
+*/
 
 // http://localhost:8080/admin/user/add
 func main() {
