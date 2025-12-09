@@ -47,4 +47,6 @@ func init() {
 	DB.AutoMigrate(Manager{})
 	DB.AutoMigrate(Role{})
 	DB.AutoMigrate(Access{})
+	DB.AutoMigrate(RoleAccess{})
+	DB.AutoMigrate(Focus{})
 }
