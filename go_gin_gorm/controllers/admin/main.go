@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type MainController struct{} // 定义一个结构体
@@ -25,8 +26,14 @@ func (con MainController) Index(c *gin.Context) {
 		json.Unmarshal([]byte(userinfoStr), &userinfoStruct) //将userinfoStr 转换成 userinfoStruct
 
 		//2.获取所有的权限
-		accessList := []models.Access{}                                           // 定义一个accessList
-		models.DB.Where("module_id=?", 0).Preload("AccessItem").Find(&accessList) // 查询出所有的权限
+		// 定义一个accessList
+		accessList := []models.Access{}
+		//权限排序,以sort字段 进行DESC倒序排序
+		//需要用到自定义预加载SQL 给Preload第二个参数传一个回调函数
+		models.DB.Where("module_id=?", 0).Preload("AccessItem", func(db *gorm.DB) *gorm.DB {
+			//这里的db就是models.DB 只不过是从回调函数里获得的
+			return db.Order("access.sort DESC") //2.在对AccessItem子查询进行排序
+		}).Order("sort DESC").Find(&accessList) //1.顶级模块直接通过Order进行排序,只能对module_id=0的进行排序 查询出所有的权限
 
 		//3.获取当前角色拥有的权限,并把权限id放到一个map对象里面
 		roleAccess := []models.RoleAccess{} //定义一个roleAccess
@@ -67,4 +74,68 @@ func (con MainController) Index(c *gin.Context) {
 
 func (con MainController) Welcome(c *gin.Context) {
 	c.HTML(http.StatusOK, "admin/main/welcome.html", gin.H{})
+}
+
+// 公共修改状态的方法
+func (con MainController) ChangeStatus(c *gin.Context) {
+	id, err := models.Int(c.Query("id"))
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+			"message": "传入的参数错误",
+		})
+		return
+	}
+
+	table := c.Query("table") // 要修改的表名
+	field := c.Query("field") // 要修改的字段名
+
+	// status = ABS(0-1)   1
+
+	// status = ABS(1-1)  0
+
+	// 通过Exec执行原生SQL语句
+	err1 := models.DB.Exec("update "+table+" set "+field+"=ABS("+field+"-1) where id=?", id).Error
+	if err1 != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+			"message": "修改失败 请重试",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": "修改成功",
+	})
+}
+
+// 公共修改状态的方法
+func (con MainController) ChangeNum(c *gin.Context) {
+	id, err := models.Int(c.Query("id"))
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+			"message": "传入的参数错误",
+		})
+		return
+	}
+
+	table := c.Query("table")
+	field := c.Query("field")
+	num := c.Query("num")
+
+	err1 := models.DB.Exec("update "+table+" set "+field+"="+num+" where id=?", id).Error
+	if err1 != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+			"message": "修改数据失败",
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"success": true,
+			"message": "修改成功",
+		})
+	}
+
 }

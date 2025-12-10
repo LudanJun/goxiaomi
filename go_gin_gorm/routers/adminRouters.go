@@ -16,6 +16,8 @@ func AdminRoutersInit(r *gin.Engine) {
 		//路由方法抽离
 		adminRouters.GET("/", admin.MainController{}.Index)
 		adminRouters.GET("/welcome", admin.MainController{}.Welcome)
+		adminRouters.GET("/changeStatus", admin.MainController{}.ChangeStatus)
+		adminRouters.GET("/changeNum", admin.MainController{}.ChangeNum)
 
 		adminRouters.GET("/login", admin.LoginController{}.Index)       //登录页面
 		adminRouters.GET("/captcha", admin.LoginController{}.Captcha)   //验证码

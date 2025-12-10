@@ -100,7 +100,7 @@ func UploadImg(c *gin.Context, picName string) (string, error) {
 	// 可执行文件同级目录下 static/upload/20251209
 	// dir := filepath.Join(execDir(), "static", "upload", day)//这个是存到了项目根目录里再创建了一个tmp文件夹里
 	fmt.Println("dir00", dir)
-	err1 := os.MkdirAll(dir, 0666) // 创建目录 0755在Mac上这样写权限 0666在Window上这样写  实测这俩都可以
+	err1 := os.MkdirAll(dir, 0755) // 创建目录 0755在Mac上这样写权限 0666在Window上这样写 
 	if err1 != nil {
 		fmt.Println(err1)
 		return "", err1
